@@ -9,6 +9,7 @@ CREATE TABLE Customer (
     name VARCHAR(255) NOT NULL,
     phone_number VARCHAR(20) NOT NULL UNIQUE,
     email VARCHAR(255) NOT NULL UNIQUE,
+    role VARCHAR(100) DEFAULT 'customer',
     date_of_birth DATE,
     city VARCHAR(100) NOT NULL,
     street VARCHAR(255) NOT NULL,
