@@ -50,7 +50,8 @@ public class CustomerService {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(userRepository.save(customer));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating customer: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error creating customer: " + e.getMessage());
         }
     }
 
@@ -68,7 +69,8 @@ public class CustomerService {
             userRepository.deleteById(id);
             return ResponseEntity.status(HttpStatus.OK).body("Customer deleted successfully");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting customer: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error deleting customer: " + e.getMessage());
         }
     }
 
@@ -85,17 +87,22 @@ public class CustomerService {
         Customer existingCustomer = res.get(); // extract Customer from res
 
         // Update fields if they are provided in the request
-        if (customer.getName() != null) existingCustomer.setName(customer.getName());
-        if (customer.getCity() != null) existingCustomer.setCity(customer.getCity());
-        if (customer.getStreet() != null) existingCustomer.setStreet(customer.getStreet());
-        if (customer.getHouseNo() != null) existingCustomer.setHouseNo(customer.getHouseNo());
-        if (customer.getDateOfBirth() != null) existingCustomer.setDateOfBirth(customer.getDateOfBirth());
+        if (customer.getName() != null)
+            existingCustomer.setName(customer.getName());
+        if (customer.getCity() != null)
+            existingCustomer.setCity(customer.getCity());
+        if (customer.getStreet() != null)
+            existingCustomer.setStreet(customer.getStreet());
+        if (customer.getHouseNo() != null)
+            existingCustomer.setHouseNo(customer.getHouseNo());
+        if (customer.getDateOfBirth() != null)
+            existingCustomer.setDateOfBirth(customer.getDateOfBirth());
 
         try {
             return ResponseEntity.status(HttpStatus.OK).body(userRepository.save(existingCustomer));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating customer: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error updating customer: " + e.getMessage());
         }
     }
 }
-

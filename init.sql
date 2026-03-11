@@ -57,7 +57,7 @@ CREATE TABLE Employee (
     FOREIGN KEY (work_branch_id) REFERENCES Branch (id)
 ) AUTO_INCREMENT = 104000;
 
-CREATE TABLE Transaction (
+CREATE TABLE BankTransaction (
     id INT PRIMARY KEY AUTO_INCREMENT,
     type ENUM('deposit','withdrawal','transfer') NOT NULL,
     amount DECIMAL(15, 2) NOT NULL,

@@ -31,4 +31,10 @@ public class AuthService {
             return ResponseEntity.status(401).body("Invalid email or password");
         }
     }
+
+    public ResponseEntity<?> logout(String token) {
+        // Invalidate the token (if using a token blacklist or similar mechanism)
+        // tokenService.invalidateToken(token);
+        return ResponseEntity.ok("Logged out successfully");
+    }
 }
