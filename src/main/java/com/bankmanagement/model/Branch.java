@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 public class Branch {
 
     @Id
-    @Column(name = "branch_id", nullable = false, unique = true)
-    private String branchId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -28,7 +28,7 @@ public class Branch {
 
     @Override
     public String toString() {
-        return "Branch{" + "branchId='" + branchId + '\'' + ", name='" + name + '\'' +
+        return "Branch{" + "id=" + id + ", name='" + name + '\'' +
                 ", division='" + division + '\'' + ", city='" + city + '\'' + ", street='" + street + '\'' +
                 '}';
     }

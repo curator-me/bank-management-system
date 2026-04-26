@@ -1,10 +1,8 @@
-create DATABASE IF NOT EXISTS `bank_db`;
-
-DROP DATABASE `bank_db`;
+CREATE DATABASE IF NOT EXISTS `bank_db`;
 
 USE `bank_db`;
 
-CREATE TABLE Customer (
+CREATE TABLE IF NOT EXISTS Customer (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     phone_number VARCHAR(20) NOT NULL UNIQUE,
@@ -19,7 +17,7 @@ CREATE TABLE Customer (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) AUTO_INCREMENT = 101000;
 
-CREATE TABLE Branch (
+CREATE TABLE IF NOT EXISTS Branch (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     division VARCHAR(100) NOT NULL,
@@ -27,7 +25,7 @@ CREATE TABLE Branch (
     street VARCHAR(255) NOT NULL
 ) AUTO_INCREMENT = 103000;
 
-CREATE TABLE Account (
+CREATE TABLE IF NOT EXISTS Account (
     id INT PRIMARY KEY AUTO_INCREMENT,
     secret_key VARCHAR(255) NOT NULL UNIQUE,
     balance DECIMAL(15, 2) NOT NULL,
@@ -40,7 +38,7 @@ CREATE TABLE Account (
     FOREIGN KEY (created_at_branch) REFERENCES Branch (id)
 ) AUTO_INCREMENT = 102000;
 
-CREATE TABLE Employee (
+CREATE TABLE IF NOT EXISTS Employee (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     phone_number VARCHAR(20) NOT NULL UNIQUE,
@@ -57,7 +55,7 @@ CREATE TABLE Employee (
     FOREIGN KEY (work_branch_id) REFERENCES Branch (id)
 ) AUTO_INCREMENT = 104000;
 
-CREATE TABLE BankTransaction (
+CREATE TABLE IF NOT EXISTS BankTransaction (
     id INT PRIMARY KEY AUTO_INCREMENT,
     type ENUM('deposit','withdrawal','transfer') NOT NULL,
     amount DECIMAL(15, 2) NOT NULL,
@@ -66,13 +64,13 @@ CREATE TABLE BankTransaction (
     FOREIGN KEY (account_id) REFERENCES Account (id)
 ) AUTO_INCREMENT = 105000;
 
-CREATE TABLE LoanType (
+CREATE TABLE IF NOT EXISTS LoanType (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL UNIQUE,
     description TEXT
 ) AUTO_INCREMENT = 107000;
 
-CREATE TABLE Loan (
+CREATE TABLE IF NOT EXISTS Loan (
     id INT PRIMARY KEY AUTO_INCREMENT,
     amount DECIMAL(15, 2) NOT NULL,
     loan_type INT NOT NULL,
@@ -85,3 +83,17 @@ CREATE TABLE Loan (
     FOREIGN KEY (loan_type) REFERENCES LoanType (id)
 ) AUTO_INCREMENT = 106000;
 
+CREATE TABLE IF NOT EXISTS Payment (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    from_account_id INT NOT NULL,
+    to_account_id INT NOT NULL,
+    amount DECIMAL(15, 2) NOT NULL,
+    description TEXT,
+    reference_number VARCHAR(50) NOT NULL UNIQUE,
+    status ENUM('initiated', 'authorized', 'confirmed', 'cancelled') NOT NULL DEFAULT 'initiated',
+    authorized_by INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (from_account_id) REFERENCES Account (id),
+    FOREIGN KEY (to_account_id) REFERENCES Account (id)
+) AUTO_INCREMENT = 108000;

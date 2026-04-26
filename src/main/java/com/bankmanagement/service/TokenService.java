@@ -90,4 +90,21 @@ public class TokenService {
         }
         return false;
     }
+
+    public boolean authorizeToken(String authHeader,String role) {
+        String token = authHeader.substring(7);
+
+        if(!validateJwtToken(token)) {
+            return false;
+        }
+
+        if(role.length() == 0) return true;
+
+        String tokenRole = getRoleFromToken(token);
+
+        // if role not in roles: return false
+        if(!tokenRole.equals(role)) return false;
+
+        return true;
+    }
 }

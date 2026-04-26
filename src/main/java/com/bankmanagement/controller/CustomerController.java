@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 import com.bankmanagement.model.Customer;
 import com.bankmanagement.service.CustomerService;
+import com.bankmanagement.service.TokenService;
 
 import java.util.List;
 
@@ -22,6 +24,9 @@ public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
+
+    @Autowired
+    private TokenService tokenService;
 
     @GetMapping("")
     public List<Customer> getCustomers() {
@@ -34,12 +39,20 @@ public class CustomerController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createCustomer(@RequestBody Customer customer) {
+    public ResponseEntity<?> createCustomer(@RequestBody Customer customer, @RequestHeader("Authorization") String authHeader) {
+        if(!tokenService.authorizeToken(authHeader,"employee")) {
+            return ResponseEntity.status(403).body("Forbidden: Only employee can create customers");
+        }
         return customerService.createCustomer(customer);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCustomer(@PathVariable Integer id) {
+    public ResponseEntity<?> deleteCustomer(@PathVariable Integer id, @RequestHeader("Authorization") String authHeader) {
+
+        if (!tokenService.authorizeToken(authHeader, "employee")) {
+            return ResponseEntity.status(403).body("Forbidden: Only employee can delete customers");
+        }
+
         return customerService.deleteCustomer(id);
     }
 
