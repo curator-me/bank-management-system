@@ -34,7 +34,7 @@ public class PaymentService {
     private BankTransactionRepository bankTransactionRepository;
 
     /**
-     * Initiate a new payment.
+     * Initiate a new payment. 
      * Creates a payment record with status "initiated".
      * Validates both accounts exist, are active, and the sender has sufficient balance.
      */

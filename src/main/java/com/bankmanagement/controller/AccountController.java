@@ -12,7 +12,7 @@ import com.bankmanagement.service.AccountService;
 import com.bankmanagement.service.TokenService;
 
 import java.util.List;
-
+ 
 @RestController
 @RequestMapping("/accounts")
 public class AccountController {

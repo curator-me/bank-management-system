@@ -18,7 +18,7 @@ public class AccountService {
     public List<Account> getAllAccounts() {
         return accountRepository.findAll();
     }
-
+    
     public ResponseEntity<?> getAccountById(Integer customerId, Integer accountId) {
         if (customerId == null || accountId == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("customerId or accountId cannot be null");

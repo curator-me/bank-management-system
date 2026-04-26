@@ -16,7 +16,7 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
+    
     @Column(name = "secret_key", nullable = false, unique = true)
     private String secretKey;
 

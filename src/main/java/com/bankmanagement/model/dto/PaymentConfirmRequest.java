@@ -8,3 +8,4 @@ import lombok.NoArgsConstructor;
 public class PaymentConfirmRequest {
     private Integer paymentId;
 }
+ 
